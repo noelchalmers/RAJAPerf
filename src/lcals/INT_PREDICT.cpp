@@ -21,7 +21,7 @@
 
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace lcals
 {
@@ -47,7 +47,7 @@ INT_PREDICT::INT_PREDICT(const RunParams& params)
    setDefaultReps(4000);
 }
 
-INT_PREDICT::~INT_PREDICT() 
+INT_PREDICT::~INT_PREDICT()
 {
 }
 
@@ -102,7 +102,7 @@ void INT_PREDICT::runKernel(VariantID vid)
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
 
         RAJA::forall<RAJA::simd_exec>(
-          RAJA::RangeSegment(ibegin, iend), [=](Index_type i) { 
+          RAJA::RangeSegment(ibegin, iend), [=](Index_type i) {
           INT_PREDICT_BODY;
         });
 
@@ -168,6 +168,15 @@ void INT_PREDICT::runKernel(VariantID vid)
     }
 #endif
 
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
+      break;
+    }
+#endif
+
     default : {
       std::cout << "\n  INT_PREDICT : Unknown variant id = " << vid << std::endl;
     }
@@ -181,7 +190,7 @@ void INT_PREDICT::updateChecksum(VariantID vid)
   for (Index_type i = 0; i < getRunSize(); ++i) {
     m_px[i] -= m_px_initval;
   }
-  
+
   checksum[vid] += calcChecksum(m_px, getRunSize());
 }
 

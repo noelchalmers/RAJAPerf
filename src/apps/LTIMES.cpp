@@ -21,7 +21,7 @@
 
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace apps
 {
@@ -46,21 +46,21 @@ LTIMES::LTIMES(const RunParams& params)
   m_num_g_default = 32;
   m_num_m_default = 25;
 
-  setDefaultSize(m_num_d_default * m_num_m_default * 
+  setDefaultSize(m_num_d_default * m_num_m_default *
                  m_num_g_default * m_num_z_default);
   setDefaultReps(50);
 }
 
-LTIMES::~LTIMES() 
+LTIMES::~LTIMES()
 {
 }
 
 void LTIMES::setUp(VariantID vid)
 {
   m_num_z = run_params.getSizeFactor() * m_num_z_default;
-  m_num_g = m_num_g_default;  
-  m_num_m = m_num_m_default;  
-  m_num_d = m_num_d_default;  
+  m_num_g = m_num_g_default;
+  m_num_m = m_num_m_default;
+  m_num_d = m_num_d_default;
 
   m_philen = m_num_m * m_num_g * m_num_z;
   m_elllen = m_num_d * m_num_m;
@@ -80,7 +80,7 @@ void LTIMES::runKernel(VariantID vid)
     case Base_Seq : {
 
       LTIMES_DATA_SETUP_CPU;
-  
+
       startTimer();
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
 
@@ -98,7 +98,7 @@ void LTIMES::runKernel(VariantID vid)
       stopTimer();
 
       break;
-    } 
+    }
 
     case RAJA_Seq : {
 
@@ -106,7 +106,7 @@ void LTIMES::runKernel(VariantID vid)
 
       LTIMES_VIEWS_RANGES_RAJA;
 
-      using EXEC_POL = 
+      using EXEC_POL =
         RAJA::KernelPolicy<
           RAJA::statement::For<1, RAJA::loop_exec,       // z
             RAJA::statement::For<2, RAJA::loop_exec,     // g
@@ -117,26 +117,26 @@ void LTIMES::runKernel(VariantID vid)
               >
             >
           >
-        >;  
+        >;
 
       startTimer();
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
-     
+
         RAJA::kernel<EXEC_POL>( RAJA::make_tuple(IDRange(0, num_d),
                                                  IZRange(0, num_z),
                                                  IGRange(0, num_g),
-                                                 IMRange(0, num_m)), 
+                                                 IMRange(0, num_m)),
           [=](ID d, IZ z, IG g, IM m) {
           LTIMES_BODY_RAJA;
         });
 
       }
-      stopTimer(); 
+      stopTimer();
 
       break;
     }
 
-#if defined(RAJA_ENABLE_OPENMP)      
+#if defined(RAJA_ENABLE_OPENMP)
     case Base_OpenMP : {
 
       LTIMES_DATA_SETUP_CPU;
@@ -153,7 +153,7 @@ void LTIMES::runKernel(VariantID vid)
               }
             }
           }
-        }  
+        }
 
       }
       stopTimer();
@@ -167,7 +167,7 @@ void LTIMES::runKernel(VariantID vid)
 
       LTIMES_VIEWS_RANGES_RAJA;
 
-      using EXEC_POL = 
+      using EXEC_POL =
         RAJA::KernelPolicy<
           RAJA::statement::For<1, RAJA::omp_parallel_for_exec, // z
             RAJA::statement::For<2, RAJA::loop_exec,           // g
@@ -175,7 +175,7 @@ void LTIMES::runKernel(VariantID vid)
                 RAJA::statement::For<0, RAJA::loop_exec,       // d
                   RAJA::statement::Lambda<0>
                 >
-              > 
+              >
             >
           >
         >;
@@ -186,7 +186,7 @@ void LTIMES::runKernel(VariantID vid)
         RAJA::kernel<EXEC_POL>( RAJA::make_tuple(IDRange(0, num_d),
                                                  IZRange(0, num_z),
                                                  IGRange(0, num_g),
-                                                 IMRange(0, num_m)), 
+                                                 IMRange(0, num_m)),
           [=](ID d, IZ z, IG g, IM m) {
           LTIMES_BODY_RAJA;
         });
@@ -216,6 +216,15 @@ void LTIMES::runKernel(VariantID vid)
     }
 #endif
 
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
+      break;
+    }
+#endif
+
     default : {
       std::cout << "\n LTIMES : Unknown variant id = " << vid << std::endl;
     }
@@ -231,7 +240,7 @@ void LTIMES::updateChecksum(VariantID vid)
 void LTIMES::tearDown(VariantID vid)
 {
   (void) vid;
- 
+
   deallocData(m_phidat);
   deallocData(m_elldat);
   deallocData(m_psidat);

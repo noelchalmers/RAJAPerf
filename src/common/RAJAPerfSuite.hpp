@@ -46,7 +46,7 @@ class RunParams;
  * kernel 3mm
  *
  * kernel	category	datatype	params	MINI	SMALL	MEDIUM	LARGE	EXTRALARGE
- * 3mm	linear-algebra/kernels	double	NI NJ NK NL NM	16 18 20 22 24	40 50 60 70 80 .... 
+ * 3mm	linear-algebra/kernels	double	NI NJ NK NL NM	16 18 20 22 24	40 50 60 70 80 ....
  * *
  *******************************************************************************
  */
@@ -60,8 +60,8 @@ typedef enum SizeSpec {Mini,Small,Medium,Large,Extralarge,Specundefined} SizeSpe
  *
  * IMPORTANT: This is only modified when a group is added or removed.
  *
- *            ENUM VALUES MUST BE KEPT CONSISTENT (CORRESPONDING ONE-TO-ONE) 
- *            WITH ARRAY OF GROUP NAMES IN IMPLEMENTATION FILE!!! 
+ *            ENUM VALUES MUST BE KEPT CONSISTENT (CORRESPONDING ONE-TO-ONE)
+ *            WITH ARRAY OF GROUP NAMES IN IMPLEMENTATION FILE!!!
  *
  *******************************************************************************
  */
@@ -86,8 +86,8 @@ enum GroupID {
  *
  * IMPORTANT: This is only modified when a kernel is added or removed.
  *
- *            ENUM VALUES MUST BE KEPT CONSISTENT (CORRESPONDING ONE-TO-ONE) 
- *            WITH ARRAY OF KERNEL NAMES IN IMPLEMENTATION FILE!!! 
+ *            ENUM VALUES MUST BE KEPT CONSISTENT (CORRESPONDING ONE-TO-ONE)
+ *            WITH ARRAY OF KERNEL NAMES IN IMPLEMENTATION FILE!!!
  *
  *******************************************************************************
  */
@@ -156,7 +156,7 @@ enum KernelID {
  * IMPORTANT: This is only modified when a new kernel is added to the suite.
  *
  *            IT MUST BE KEPT CONSISTENT (CORRESPONDING ONE-TO-ONE) WITH
- *            ARRAY OF VARIANT NAMES IN IMPLEMENTATION FILE!!! 
+ *            ARRAY OF VARIANT NAMES IN IMPLEMENTATION FILE!!!
  *
  *******************************************************************************
  */
@@ -169,7 +169,7 @@ enum VariantID {
   Base_OpenMP,
   RAJA_OpenMP,
 
-#if defined(RAJA_ENABLE_TARGET_OPENMP)  
+#if defined(RAJA_ENABLE_TARGET_OPENMP)
   Base_OpenMPTarget,
   RAJA_OpenMPTarget,
 #endif
@@ -179,6 +179,11 @@ enum VariantID {
 #if defined(RAJA_ENABLE_CUDA)
   Base_CUDA,
   RAJA_CUDA,
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+  Base_HIP,
+  RAJA_HIP,
 #endif
 
   NumVariants // Keep this one last and NEVER comment out (!!)
@@ -224,7 +229,7 @@ const std::string& getFullKernelName(KernelID kid);
  *
  *******************************************************************************
  */
-const std::string& getVariantName(VariantID vid); 
+const std::string& getVariantName(VariantID vid);
 
 /*!
  *******************************************************************************

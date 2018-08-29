@@ -23,7 +23,7 @@
 #include <cstring>
 
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace polybench
 {
@@ -35,9 +35,9 @@ namespace polybench
   ResReal_ptr C = m_C; \
   ResReal_ptr D = m_D; \
   Real_type alpha = m_alpha; \
-  Real_type beta = m_beta; 
+  Real_type beta = m_beta;
 
-  
+
 POLYBENCH_2MM::POLYBENCH_2MM(const RunParams& params)
   : KernelBase(rajaperf::Polybench_2MM, params)
 {
@@ -75,7 +75,7 @@ POLYBENCH_2MM::POLYBENCH_2MM(const RunParams& params)
   setDefaultReps(m_run_reps);
 }
 
-POLYBENCH_2MM::~POLYBENCH_2MM() 
+POLYBENCH_2MM::~POLYBENCH_2MM()
 {
 
 }
@@ -108,7 +108,7 @@ void POLYBENCH_2MM::runKernel(VariantID vid)
       startTimer();
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
 
-        for (Index_type i = 0; i < ni; i++ ) { 
+        for (Index_type i = 0; i < ni; i++ ) {
           for (Index_type j = 0; j < nj; j++) {
             POLYBENCH_2MM_BODY1;
             for (Index_type k = 0; k < nk; k++) {
@@ -183,7 +183,7 @@ void POLYBENCH_2MM::runKernel(VariantID vid)
       break;
     }
 
-#if defined(RAJA_ENABLE_OPENMP)      
+#if defined(RAJA_ENABLE_OPENMP)
     case Base_OpenMP : {
 
       POLYBENCH_2MM_DATA_SETUP_CPU;
@@ -191,7 +191,7 @@ void POLYBENCH_2MM::runKernel(VariantID vid)
       startTimer();
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
 
-        #pragma omp parallel for collapse(2) 
+        #pragma omp parallel for collapse(2)
         for (Index_type i = 0; i < ni; i++ ) {
           for(Index_type j = 0; j < nj; j++) {
             POLYBENCH_2MM_BODY1;
@@ -203,7 +203,7 @@ void POLYBENCH_2MM::runKernel(VariantID vid)
 
         memcpy(m_D,m_DD,m_ni * m_nl * sizeof(Real_type));
 
-        #pragma omp parallel for collapse(2)  
+        #pragma omp parallel for collapse(2)
         for(Index_type i = 0; i < ni; i++) {
           for(Index_type l = 0; l < nl; l++) {
             POLYBENCH_2MM_BODY3;
@@ -296,6 +296,15 @@ void POLYBENCH_2MM::runKernel(VariantID vid)
     case RAJA_CUDA :
     {
       runCudaVariant(vid);
+      break;
+    }
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
       break;
     }
 #endif

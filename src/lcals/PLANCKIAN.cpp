@@ -22,7 +22,7 @@
 #include <iostream>
 #include <cmath>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace lcals
 {
@@ -43,7 +43,7 @@ PLANCKIAN::PLANCKIAN(const RunParams& params)
    setDefaultReps(460);
 }
 
-PLANCKIAN::~PLANCKIAN() 
+PLANCKIAN::~PLANCKIAN()
 {
 }
 
@@ -151,6 +151,15 @@ void PLANCKIAN::runKernel(VariantID vid)
     case RAJA_CUDA :
     {
       runCudaVariant(vid);
+      break;
+    }
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
       break;
     }
 #endif

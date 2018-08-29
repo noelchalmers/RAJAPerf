@@ -21,7 +21,7 @@
 
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace lcals
 {
@@ -44,7 +44,7 @@ HYDRO_1D::HYDRO_1D(const RunParams& params)
    setDefaultReps(12500);
 }
 
-HYDRO_1D::~HYDRO_1D() 
+HYDRO_1D::~HYDRO_1D()
 {
 }
 
@@ -126,7 +126,7 @@ void HYDRO_1D::runKernel(VariantID vid)
     case RAJA_OpenMP : {
 
       HYDRO_1D_DATA_SETUP_CPU;
-      
+
       startTimer();
 
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
@@ -157,6 +157,15 @@ void HYDRO_1D::runKernel(VariantID vid)
     case RAJA_CUDA :
     {
       runCudaVariant(vid);
+      break;
+    }
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
       break;
     }
 #endif

@@ -22,7 +22,7 @@
 #include <algorithm>
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace apps
 {
@@ -47,11 +47,11 @@ FIR::FIR(const RunParams& params)
   m_coefflen = FIR_COEFFLEN;
 }
 
-FIR::~FIR() 
+FIR::~FIR()
 {
 }
 
-Index_type FIR::getItsPerRep() const { 
+Index_type FIR::getItsPerRep() const {
   return getRunSize() - m_coefflen;
 }
 
@@ -74,7 +74,7 @@ void FIR::runKernel(VariantID vid)
       FIR_COEFF;
 
       FIR_DATA_SETUP_CPU;
-  
+
       startTimer();
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
 
@@ -86,35 +86,35 @@ void FIR::runKernel(VariantID vid)
       stopTimer();
 
       break;
-    } 
+    }
 
     case RAJA_Seq : {
 
       FIR_COEFF;
 
       FIR_DATA_SETUP_CPU;
- 
+
       startTimer();
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
 
         RAJA::forall<RAJA::simd_exec>(
           RAJA::RangeSegment(ibegin, iend), [=](int i) {
           FIR_BODY;
-        }); 
+        });
 
       }
-      stopTimer(); 
+      stopTimer();
 
       break;
     }
 
-#if defined(RAJA_ENABLE_OPENMP)      
+#if defined(RAJA_ENABLE_OPENMP)
     case Base_OpenMP : {
 
       FIR_COEFF;
 
       FIR_DATA_SETUP_CPU;
- 
+
       startTimer();
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
 
@@ -168,6 +168,15 @@ void FIR::runKernel(VariantID vid)
     }
 #endif
 
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
+      break;
+    }
+#endif
+
     default : {
       std::cout << "\n  FIR : Unknown variant id = " << vid << std::endl;
     }
@@ -183,7 +192,7 @@ void FIR::updateChecksum(VariantID vid)
 void FIR::tearDown(VariantID vid)
 {
   (void) vid;
- 
+
   deallocData(m_in);
   deallocData(m_out);
 }

@@ -22,7 +22,7 @@
 
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace apps
 {
@@ -54,13 +54,13 @@ DEL_DOT_VEC_2D::DEL_DOT_VEC_2D(const RunParams& params)
   m_array_length = m_domain->nnalls;
 }
 
-DEL_DOT_VEC_2D::~DEL_DOT_VEC_2D() 
+DEL_DOT_VEC_2D::~DEL_DOT_VEC_2D()
 {
   delete m_domain;
 }
 
-Index_type DEL_DOT_VEC_2D::getItsPerRep() const 
-{ 
+Index_type DEL_DOT_VEC_2D::getItsPerRep() const
+{
   return m_domain->n_real_zones;
 }
 
@@ -112,7 +112,7 @@ void DEL_DOT_VEC_2D::runKernel(VariantID vid)
       stopTimer();
 
       break;
-    } 
+    }
 
     case RAJA_Seq : {
 
@@ -130,15 +130,15 @@ void DEL_DOT_VEC_2D::runKernel(VariantID vid)
 
         RAJA::forall<RAJA::loop_exec>(zones, [=](Index_type i) {
           DEL_DOT_VEC_2D_BODY;
-        }); 
+        });
 
       }
-      stopTimer(); 
+      stopTimer();
 
       break;
     }
 
-#if defined(RAJA_ENABLE_OPENMP)      
+#if defined(RAJA_ENABLE_OPENMP)
     case Base_OpenMP : {
 
       DEL_DOT_VEC_2D_DATA_SETUP_CPU;
@@ -152,7 +152,7 @@ void DEL_DOT_VEC_2D::runKernel(VariantID vid)
       startTimer();
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
 
-        #pragma omp parallel for 
+        #pragma omp parallel for
         for (Index_type ii = ibegin ; ii < iend ; ++ii ) {
           DEL_DOT_VEC_2D_BODY_INDEX;
           DEL_DOT_VEC_2D_BODY;
@@ -178,7 +178,7 @@ void DEL_DOT_VEC_2D::runKernel(VariantID vid)
       startTimer();
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
 
-        RAJA::forall<RAJA::omp_parallel_for_exec>(zones, [=](Index_type i) { 
+        RAJA::forall<RAJA::omp_parallel_for_exec>(zones, [=](Index_type i) {
           DEL_DOT_VEC_2D_BODY;
         });
 
@@ -203,6 +203,15 @@ void DEL_DOT_VEC_2D::runKernel(VariantID vid)
     case RAJA_CUDA :
     {
       runCudaVariant(vid);
+      break;
+    }
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
       break;
     }
 #endif

@@ -58,7 +58,7 @@ public:
   Index_type getRunSize() const;
   Index_type getRunReps() const;
 
-  bool wasVariantRun(VariantID vid) const 
+  bool wasVariantRun(VariantID vid) const
     { return num_exec[vid] > 0; }
 
   double getMinTime(VariantID vid) const { return min_time[vid]; }
@@ -68,24 +68,32 @@ public:
 
   void execute(VariantID vid);
 
-  void startTimer() 
-  { 
+  void startTimer()
+  {
 #if defined(RAJA_ENABLE_CUDA)
     if ( running_variant == Base_CUDA || running_variant == RAJA_CUDA ) {
       cudaDeviceSynchronize();
     }
+#elif defined(RAJA_ENABLE_HIP)
+    if ( running_variant == Base_HIP || running_variant == RAJA_HIP ) {
+      hipDeviceSynchronize();
+    }
 #endif
-    timer.start(); 
+    timer.start();
   }
 
-  void stopTimer()  
-  { 
+  void stopTimer()
+  {
 #if defined(RAJA_ENABLE_CUDA)
     if ( running_variant == Base_CUDA || running_variant == RAJA_CUDA ) {
       cudaDeviceSynchronize();
     }
+#elif defined(RAJA_ENABLE_HIP)
+    if ( running_variant == Base_HIP || running_variant == RAJA_HIP ) {
+      hipDeviceSynchronize();
+    }
 #endif
-    timer.stop(); recordExecTime(); 
+    timer.stop(); recordExecTime();
   }
 
   void resetTimer() { timer.reset(); }
@@ -97,7 +105,7 @@ public:
 
   virtual Index_type getItsPerRep() const { return getRunSize(); }
 
-  virtual void print(std::ostream& os) const; 
+  virtual void print(std::ostream& os) const;
 
   virtual void setUp(VariantID vid) = 0;
   virtual void runKernel(VariantID vid) = 0;
@@ -119,7 +127,7 @@ protected:
 private:
   KernelBase() = delete;
 
-  void recordExecTime(); 
+  void recordExecTime();
 
   KernelID    kernel_id;
   std::string name;
@@ -129,7 +137,7 @@ private:
   Index_type default_size;
   Index_type default_reps;
 
-  VariantID running_variant; 
+  VariantID running_variant;
 };
 
 }  // closing brace for rajaperf namespace

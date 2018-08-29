@@ -15,9 +15,9 @@
 ///
 /// POLYBENCH_3MM kernel reference implementation:
 ///
-/// E := A*B 
-/// F := C*D 
-/// G := E*F 
+/// E := A*B
+/// F := C*D
+/// G := E*F
 ///
 /// for (Index_type i = 0; i < _PB_NI; i++) {
 ///   for (Index_type j = 0; j < _PB_NJ; j++) {
@@ -26,7 +26,7 @@
 ///       E[i][j] += A[i][k] * B[k][j];
 ///     }
 ///   }
-/// } 
+/// }
 /// for (Index_type i = 0; i < _PB_NJ; i++) {
 ///   for (Index_type j = 0; j < _PB_NL; j++) {
 ///	F[i][j] = SCALAR_VAL(0.0);
@@ -69,7 +69,7 @@
 
 #include "common/KernelBase.hpp"
 
-namespace rajaperf 
+namespace rajaperf
 {
 
 class RunParams;
@@ -87,10 +87,11 @@ public:
 
 
   void setUp(VariantID vid);
-  void runKernel(VariantID vid); 
+  void runKernel(VariantID vid);
   void updateChecksum(VariantID vid);
   void tearDown(VariantID vid);
   void runCudaVariant(VariantID vid);
+  void runHipVariant(VariantID vid);
   void runOpenMPTargetVariant(VariantID vid);
 
 private:
@@ -103,7 +104,7 @@ private:
   Real_ptr m_A;
   Real_ptr m_B;
   Real_ptr m_C;
-  Real_ptr m_D; 
+  Real_ptr m_D;
   Real_ptr m_E;
   Real_ptr m_F;
   Real_ptr m_G;

@@ -22,7 +22,7 @@
 
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace apps
 {
@@ -64,14 +64,14 @@ COUPLE::COUPLE(const RunParams& params)
   m_kmax = m_domain->kmax;
 }
 
-COUPLE::~COUPLE() 
+COUPLE::~COUPLE()
 {
   delete m_domain;
 }
 
-Index_type COUPLE::getItsPerRep() const 
-{ 
-  return  ( (m_imax - m_imin) * (m_jmax - m_jmin) * (m_kmax - m_kmin) ); 
+Index_type COUPLE::getItsPerRep() const
+{
+  return  ( (m_imax - m_imin) * (m_jmax - m_jmin) * (m_kmax - m_kmin) );
 }
 
 void COUPLE::setUp(VariantID vid)
@@ -93,7 +93,7 @@ void COUPLE::setUp(VariantID vid)
   m_fratio = sqrt(m_omegar / m_omega0);
   m_r_fratio = 1.0/m_fratio;
   m_c20 = 0.25 * (m_clight / m_csound) * m_r_fratio;
-  m_ireal = Complex_type(0.0, 1.0); 
+  m_ireal = Complex_type(0.0, 1.0);
 }
 
 void COUPLE::runKernel(VariantID vid)
@@ -117,7 +117,7 @@ void COUPLE::runKernel(VariantID vid)
       stopTimer();
 
       break;
-    } 
+    }
 
     case RAJA_Seq : {
 
@@ -129,22 +129,22 @@ void COUPLE::runKernel(VariantID vid)
         RAJA::forall<RAJA::loop_exec>(
           RAJA::RangeSegment(kmin, kmax), [=](int k) {
           COUPLE_BODY;
-        }); 
+        });
 
       }
-      stopTimer(); 
+      stopTimer();
 
       break;
     }
 
-#if defined(RAJA_ENABLE_OPENMP)      
+#if defined(RAJA_ENABLE_OPENMP)
     case Base_OpenMP : {
       COUPLE_DATA_SETUP_CPU;
 
       startTimer();
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
 
-        #pragma omp parallel for 
+        #pragma omp parallel for
         for (Index_type k = kmin ; k < kmax ; ++k ) {
           COUPLE_BODY;
         }
@@ -164,10 +164,10 @@ void COUPLE::runKernel(VariantID vid)
         RAJA::forall<RAJA::omp_parallel_for_exec>(
           RAJA::RangeSegment(kmin, kmax), [=](int k) {
           COUPLE_BODY;
-        }); 
+        });
 
       }
-      stopTimer(); 
+      stopTimer();
 
       break;
     }
@@ -191,6 +191,15 @@ void COUPLE::runKernel(VariantID vid)
     }
 #endif
 
+#if defined(RAJA_ENABLE_HIP) && 0
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
+      break;
+    }
+#endif
+
     default : {
       std::cout << "\n  COUPLE : Unknown variant id = " << vid << std::endl;
     }
@@ -210,7 +219,7 @@ void COUPLE::updateChecksum(VariantID vid)
 void COUPLE::tearDown(VariantID vid)
 {
   (void) vid;
- 
+
   deallocData(m_t0);
   deallocData(m_t1);
   deallocData(m_t2);

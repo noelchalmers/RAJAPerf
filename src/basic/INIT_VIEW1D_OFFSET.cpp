@@ -21,7 +21,7 @@
 
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace basic
 {
@@ -44,14 +44,14 @@ INIT_VIEW1D_OFFSET::INIT_VIEW1D_OFFSET(const RunParams& params)
    setDefaultReps(5000);
 }
 
-INIT_VIEW1D_OFFSET::~INIT_VIEW1D_OFFSET() 
+INIT_VIEW1D_OFFSET::~INIT_VIEW1D_OFFSET()
 {
 }
 
 void INIT_VIEW1D_OFFSET::setUp(VariantID vid)
 {
   allocAndInitDataConst(m_a, getRunSize(), 0.0, vid);
-  m_val = 0.123;  
+  m_val = 0.123;
 }
 
 void INIT_VIEW1D_OFFSET::runKernel(VariantID vid)
@@ -151,6 +151,15 @@ void INIT_VIEW1D_OFFSET::runKernel(VariantID vid)
     case RAJA_CUDA :
     {
       runCudaVariant(vid);
+      break;
+    }
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
       break;
     }
 #endif

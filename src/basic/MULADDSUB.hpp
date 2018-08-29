@@ -35,7 +35,7 @@
 
 #include "common/KernelBase.hpp"
 
-namespace rajaperf 
+namespace rajaperf
 {
 class RunParams;
 
@@ -51,11 +51,12 @@ public:
   ~MULADDSUB();
 
   void setUp(VariantID vid);
-  void runKernel(VariantID vid); 
+  void runKernel(VariantID vid);
   void updateChecksum(VariantID vid);
   void tearDown(VariantID vid);
 
   void runCudaVariant(VariantID vid);
+  void runHipVariant(VariantID vid);
   void runOpenMPTargetVariant(VariantID vid);
 
 private:
@@ -63,7 +64,7 @@ private:
   Real_ptr m_out2;
   Real_ptr m_out3;
   Real_ptr m_in1;
-  Real_ptr m_in2; 
+  Real_ptr m_in2;
 };
 
 } // end namespace basic

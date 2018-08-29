@@ -21,7 +21,7 @@
 
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace lcals
 {
@@ -40,7 +40,7 @@ DIFF_PREDICT::DIFF_PREDICT(const RunParams& params)
    setDefaultReps(2000);
 }
 
-DIFF_PREDICT::~DIFF_PREDICT() 
+DIFF_PREDICT::~DIFF_PREDICT()
 {
 }
 
@@ -148,6 +148,15 @@ void DIFF_PREDICT::runKernel(VariantID vid)
     case RAJA_CUDA :
     {
       runCudaVariant(vid);
+      break;
+    }
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
       break;
     }
 #endif

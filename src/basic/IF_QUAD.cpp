@@ -21,7 +21,7 @@
 
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace basic
 {
@@ -42,7 +42,7 @@ IF_QUAD::IF_QUAD(const RunParams& params)
    setDefaultReps(1800);
 }
 
-IF_QUAD::~IF_QUAD() 
+IF_QUAD::~IF_QUAD()
 {
 }
 
@@ -151,6 +151,15 @@ void IF_QUAD::runKernel(VariantID vid)
     case RAJA_CUDA :
     {
       runCudaVariant(vid);
+      break;
+    }
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
       break;
     }
 #endif

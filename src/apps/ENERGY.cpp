@@ -21,7 +21,7 @@
 
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace apps
 {
@@ -55,7 +55,7 @@ ENERGY::ENERGY(const RunParams& params)
   setDefaultReps(1300);
 }
 
-ENERGY::~ENERGY() 
+ENERGY::~ENERGY()
 {
 }
 
@@ -76,7 +76,7 @@ void ENERGY::setUp(VariantID vid)
   allocAndInitData(m_ql_old, getRunSize(), vid);
   allocAndInitData(m_qq_old, getRunSize(), vid);
   allocAndInitData(m_vnewc, getRunSize(), vid);
-  
+
   initData(m_rho0);
   initData(m_e_cut);
   initData(m_emin);
@@ -94,7 +94,7 @@ void ENERGY::runKernel(VariantID vid)
     case Base_Seq : {
 
       ENERGY_DATA_SETUP_CPU;
-  
+
       startTimer();
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
 
@@ -113,7 +113,7 @@ void ENERGY::runKernel(VariantID vid)
         for (Index_type i = ibegin; i < iend; ++i ) {
           ENERGY_BODY4;
         }
-  
+
         for (Index_type i = ibegin; i < iend; ++i ) {
           ENERGY_BODY5;
         }
@@ -126,70 +126,70 @@ void ENERGY::runKernel(VariantID vid)
       stopTimer();
 
       break;
-    } 
+    }
 
     case RAJA_Seq : {
 
       ENERGY_DATA_SETUP_CPU;
- 
+
       startTimer();
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
 
         RAJA::forall<RAJA::loop_exec>(
           RAJA::RangeSegment(ibegin, iend), [=](int i) {
           ENERGY_BODY1;
-        }); 
+        });
 
         RAJA::forall<RAJA::loop_exec>(
           RAJA::RangeSegment(ibegin, iend), [=](int i) {
           ENERGY_BODY2;
-        }); 
+        });
 
         RAJA::forall<RAJA::loop_exec>(
           RAJA::RangeSegment(ibegin, iend), [=](int i) {
           ENERGY_BODY3;
-        }); 
+        });
 
         RAJA::forall<RAJA::loop_exec>(
           RAJA::RangeSegment(ibegin, iend), [=](int i) {
           ENERGY_BODY4;
-        }); 
+        });
 
         RAJA::forall<RAJA::loop_exec>(
           RAJA::RangeSegment(ibegin, iend), [=](int i) {
           ENERGY_BODY5;
-        }); 
+        });
 
         RAJA::forall<RAJA::loop_exec>(
           RAJA::RangeSegment(ibegin, iend), [=](int i) {
           ENERGY_BODY6;
-        }); 
+        });
 
       }
-      stopTimer(); 
+      stopTimer();
 
       break;
     }
 
-#if defined(RAJA_ENABLE_OPENMP)      
+#if defined(RAJA_ENABLE_OPENMP)
     case Base_OpenMP : {
 
 //
-// NOTE: This kernel should be written to have an OpenMP parallel 
+// NOTE: This kernel should be written to have an OpenMP parallel
 //       region around it and then use an OpenMP for-nowait for
 //       each loop inside it. We currently don't have a clean way to
 //       do this in RAJA. So, the base OpenMP variant is coded the
 //       way it is to be able to do an "apples to apples" comparison.
 //
-//       This will be changed in the future when the required feature 
+//       This will be changed in the future when the required feature
 //       is added to RAJA.
 //
 
       ENERGY_DATA_SETUP_CPU;
-      
+
       startTimer();
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
-    
+
         #pragma omp parallel for
         for (Index_type i = ibegin; i < iend; ++i ) {
           ENERGY_BODY1;
@@ -283,6 +283,15 @@ void ENERGY::runKernel(VariantID vid)
     case RAJA_CUDA :
     {
       runCudaVariant(vid);
+      break;
+    }
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
       break;
     }
 #endif

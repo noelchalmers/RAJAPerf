@@ -21,7 +21,7 @@
 
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace stream
 {
@@ -41,7 +41,7 @@ TRIAD::TRIAD(const RunParams& params)
    setDefaultReps(1000);
 }
 
-TRIAD::~TRIAD() 
+TRIAD::~TRIAD()
 {
 }
 
@@ -148,6 +148,15 @@ void TRIAD::runKernel(VariantID vid)
     case RAJA_CUDA :
     {
       runCudaVariant(vid);
+      break;
+    }
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
       break;
     }
 #endif

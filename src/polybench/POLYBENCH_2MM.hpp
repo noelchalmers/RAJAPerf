@@ -24,15 +24,15 @@
 ///       m_tmp[i][j] += m_alpha * m_A[i][k] * m_B[k][j];
 ///     }
 ///   }
-/// } 
+/// }
 /// for (Index_type i = 0; i < m_ni; i++) {
 ///   for (Index_type j = 0; j < m_nl; j++) {
 ///     m_D[i][j] *= m_beta;
 ///     for (Index_type k = 0; k < m_nj; ++k) {
 ///       m_D[i][j] += m_tmp[i][k] * m_C[k][j];
-///     } 
+///     }
 ///   }
-/// } 
+/// }
 ///
 
 
@@ -54,7 +54,7 @@
 
 #include "common/KernelBase.hpp"
 
-namespace rajaperf 
+namespace rajaperf
 {
 
 class RunParams;
@@ -72,10 +72,11 @@ public:
 
 
   void setUp(VariantID vid);
-  void runKernel(VariantID vid); 
+  void runKernel(VariantID vid);
   void updateChecksum(VariantID vid);
   void tearDown(VariantID vid);
   void runCudaVariant(VariantID vid);
+  void runHipVariant(VariantID vid);
   void runOpenMPTargetVariant(VariantID vid);
 
 private:
@@ -90,7 +91,7 @@ private:
   Real_ptr m_A;
   Real_ptr m_B;
   Real_ptr m_C;
-  Real_ptr m_D; 
+  Real_ptr m_D;
   Real_ptr m_DD;
 };
 

@@ -21,7 +21,7 @@
 #include <iostream>
 #include <cstring>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace polybench
 {
@@ -37,9 +37,9 @@ namespace polybench
   ResReal_ptr w = m_w; \
   ResReal_ptr x = m_x; \
   ResReal_ptr y = m_y; \
-  ResReal_ptr z = m_z; 
+  ResReal_ptr z = m_z;
 
-  
+
 POLYBENCH_GEMMVER::POLYBENCH_GEMMVER(const RunParams& params)
   : KernelBase(rajaperf::Polybench_GEMMVER, params)
 {
@@ -51,7 +51,7 @@ POLYBENCH_GEMMVER::POLYBENCH_GEMMVER(const RunParams& params)
       run_reps = 200;
       break;
     case Small:
-      m_n=120; 
+      m_n=120;
       run_reps = 200;
       break;
     case Medium:
@@ -63,7 +63,7 @@ POLYBENCH_GEMMVER::POLYBENCH_GEMMVER(const RunParams& params)
       run_reps = 20;
       break;
     case Extralarge:
-      m_n=4000; 
+      m_n=4000;
       run_reps = 5;
       break;
     default:
@@ -79,7 +79,7 @@ POLYBENCH_GEMMVER::POLYBENCH_GEMMVER(const RunParams& params)
   m_beta = 1.2;
 }
 
-POLYBENCH_GEMMVER::~POLYBENCH_GEMMVER() 
+POLYBENCH_GEMMVER::~POLYBENCH_GEMMVER()
 {
 }
 
@@ -120,17 +120,17 @@ void POLYBENCH_GEMMVER::runKernel(VariantID vid)
           }
         }
 
-        for (Index_type i = 0; i < n; i++ ) { 
+        for (Index_type i = 0; i < n; i++ ) {
           for (Index_type j = 0; j < n; j++) {
             POLYBENCH_GEMMVER_BODY2;
           }
         }
 
-        for (Index_type i = 0; i < n; i++ ) { 
+        for (Index_type i = 0; i < n; i++ ) {
           POLYBENCH_GEMMVER_BODY3;
         }
 
-        for (Index_type i = 0; i < n; i++ ) { 
+        for (Index_type i = 0; i < n; i++ ) {
           for (Index_type j = 0; j < n; j++) {
             POLYBENCH_GEMMVER_BODY4;
           }
@@ -159,25 +159,25 @@ void POLYBENCH_GEMMVER::runKernel(VariantID vid)
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
 
         RAJA::kernel<EXEC_POL>( RAJA::make_tuple(RAJA::RangeSegment{0, n},
-                                                 RAJA::RangeSegment{0, n}),  
-          [=](Index_type i, Index_type j) {     
+                                                 RAJA::RangeSegment{0, n}),
+          [=](Index_type i, Index_type j) {
           POLYBENCH_GEMMVER_BODY1;
         });
 
         RAJA::kernel<EXEC_POL>( RAJA::make_tuple(RAJA::RangeSegment{0, n},
                                                  RAJA::RangeSegment{0, n}),
-          [=](Index_type i, Index_type j) {     
+          [=](Index_type i, Index_type j) {
           POLYBENCH_GEMMVER_BODY2;
         });
 
-        RAJA::forall<RAJA::loop_exec> ( RAJA::RangeSegment{0, n}, 
+        RAJA::forall<RAJA::loop_exec> ( RAJA::RangeSegment{0, n},
           [=] (Index_type i) {
-          POLYBENCH_GEMMVER_BODY3; 
+          POLYBENCH_GEMMVER_BODY3;
         });
 
         RAJA::kernel<EXEC_POL>( RAJA::make_tuple(RAJA::RangeSegment{0, n},
                                                  RAJA::RangeSegment{0, n}),
-          [=](Index_type i, Index_type j) {     
+          [=](Index_type i, Index_type j) {
           POLYBENCH_GEMMVER_BODY4;
         });
 
@@ -188,7 +188,7 @@ void POLYBENCH_GEMMVER::runKernel(VariantID vid)
       break;
     }
 
-#if defined(RAJA_ENABLE_OPENMP)      
+#if defined(RAJA_ENABLE_OPENMP)
     case Base_OpenMP : {
 
       POLYBENCH_GEMMVER_DATA_SETUP_CPU;
@@ -196,7 +196,7 @@ void POLYBENCH_GEMMVER::runKernel(VariantID vid)
       startTimer();
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
 
-        #pragma omp parallel for  
+        #pragma omp parallel for
         for (Index_type i = 0; i < n; i++ ) {
           for (Index_type j = 0; j < n; j++) {
             POLYBENCH_GEMMVER_BODY1;
@@ -204,19 +204,19 @@ void POLYBENCH_GEMMVER::runKernel(VariantID vid)
         }
 
 
-        #pragma omp parallel for  
+        #pragma omp parallel for
         for (Index_type i = 0; i < n; i++ ) {
           for (Index_type j = 0; j < n; j++) {
             POLYBENCH_GEMMVER_BODY2;
           }
-        } 
+        }
 
-        #pragma omp parallel for  
+        #pragma omp parallel for
         for (Index_type i = 0; i < n; i++ ) {
           POLYBENCH_GEMMVER_BODY3;
         }
 
-        #pragma omp parallel for  
+        #pragma omp parallel for
         for (Index_type i = 0; i < n; i++ ) {
           for (Index_type j = 0; j < n; j++) {
             POLYBENCH_GEMMVER_BODY4;
@@ -240,31 +240,31 @@ void POLYBENCH_GEMMVER::runKernel(VariantID vid)
               RAJA::statement::Lambda<0>
             >
           >
-        >; 
+        >;
 
       startTimer();
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
 
         RAJA::kernel<EXEC_POL>( RAJA::make_tuple(RAJA::RangeSegment{0, n},
                                                  RAJA::RangeSegment{0, n}),
-          [=](Index_type i, Index_type j) {     
+          [=](Index_type i, Index_type j) {
           POLYBENCH_GEMMVER_BODY1;
         });
 
         RAJA::kernel<EXEC_POL>( RAJA::make_tuple(RAJA::RangeSegment{0, n},
                                                  RAJA::RangeSegment{0, n}),
-          [=](Index_type i, Index_type j) {     
+          [=](Index_type i, Index_type j) {
           POLYBENCH_GEMMVER_BODY2;
         });
 
-        RAJA::forall<RAJA::omp_parallel_for_exec> ( RAJA::RangeSegment{0, n}, 
+        RAJA::forall<RAJA::omp_parallel_for_exec> ( RAJA::RangeSegment{0, n},
           [=] (int i) {
-          POLYBENCH_GEMMVER_BODY3; 
+          POLYBENCH_GEMMVER_BODY3;
         });
 
         RAJA::kernel<EXEC_POL>( RAJA::make_tuple(RAJA::RangeSegment{0, n},
                                                  RAJA::RangeSegment{0, n}),
-          [=](Index_type i, Index_type j) {     
+          [=](Index_type i, Index_type j) {
           POLYBENCH_GEMMVER_BODY4;
         });
 
@@ -289,6 +289,15 @@ void POLYBENCH_GEMMVER::runKernel(VariantID vid)
     case RAJA_CUDA :
     {
       runCudaVariant(vid);
+      break;
+    }
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
       break;
     }
 #endif

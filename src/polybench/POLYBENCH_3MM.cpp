@@ -21,7 +21,7 @@
 #include <iostream>
 #include <cstring>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace polybench
 {
@@ -33,9 +33,9 @@ namespace polybench
   ResReal_ptr D = m_D; \
   ResReal_ptr E = m_E; \
   ResReal_ptr F = m_F; \
-  ResReal_ptr G = m_G; 
-  
-  
+  ResReal_ptr G = m_G;
+
+
 POLYBENCH_3MM::POLYBENCH_3MM(const RunParams& params)
   : KernelBase(rajaperf::Polybench_3MM, params)
 {
@@ -73,7 +73,7 @@ POLYBENCH_3MM::POLYBENCH_3MM(const RunParams& params)
 
 }
 
-POLYBENCH_3MM::~POLYBENCH_3MM() 
+POLYBENCH_3MM::~POLYBENCH_3MM()
 {
 }
 
@@ -175,7 +175,7 @@ void POLYBENCH_3MM::runKernel(VariantID vid)
                                                  RAJA::RangeSegment{0, nm}),
           [=](Index_type j, Index_type l, Index_type m) {
             POLYBENCH_3MM_BODY3;
-          },                                     
+          },
           [=](Index_type j, Index_type l, Index_type m) {
             POLYBENCH_3MM_BODY4;
           }
@@ -185,8 +185,8 @@ void POLYBENCH_3MM::runKernel(VariantID vid)
                                                  RAJA::RangeSegment{0, nl},
                                                  RAJA::RangeSegment{0, nj}),
           [=](Index_type i, Index_type l, Index_type j) {
-            POLYBENCH_3MM_BODY5;                 
-          },                               
+            POLYBENCH_3MM_BODY5;
+          },
           [=](Index_type i, Index_type l, Index_type j) {
             POLYBENCH_3MM_BODY6;
           }
@@ -198,7 +198,7 @@ void POLYBENCH_3MM::runKernel(VariantID vid)
       break;
     }
 
-#if defined(RAJA_ENABLE_OPENMP)      
+#if defined(RAJA_ENABLE_OPENMP)
     case Base_OpenMP : {
 
       POLYBENCH_3MM_DATA_SETUP_CPU;
@@ -206,7 +206,7 @@ void POLYBENCH_3MM::runKernel(VariantID vid)
       startTimer();
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
 
-        #pragma omp parallel for  
+        #pragma omp parallel for
         for (Index_type i = 0; i < ni; i++ )  {
           for (Index_type j = 0; j < nj; j++) {
             POLYBENCH_3MM_BODY1;
@@ -216,7 +216,7 @@ void POLYBENCH_3MM::runKernel(VariantID vid)
           }
         }
 
-        #pragma omp parallel for   
+        #pragma omp parallel for
         for (Index_type j = 0; j < nj; j++) {
           for (Index_type l = 0; l < nl; l++) {
             POLYBENCH_3MM_BODY3;
@@ -226,7 +226,7 @@ void POLYBENCH_3MM::runKernel(VariantID vid)
           }
         }
 
-        #pragma omp parallel for   
+        #pragma omp parallel for
         for (Index_type i = 0; i < ni; i++) {
           for (Index_type l = 0; l < nl; l++) {
             POLYBENCH_3MM_BODY5;
@@ -301,7 +301,7 @@ void POLYBENCH_3MM::runKernel(VariantID vid)
     }
 
 #endif //RAJA_ENABLE_OPENMP
-                       
+
 #if defined(RAJA_ENABLE_TARGET_OPENMP)
     case Base_OpenMPTarget :
     case RAJA_OpenMPTarget :
@@ -316,6 +316,15 @@ void POLYBENCH_3MM::runKernel(VariantID vid)
     case RAJA_CUDA :
     {
       runCudaVariant(vid);
+      break;
+    }
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
       break;
     }
 #endif

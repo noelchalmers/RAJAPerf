@@ -15,23 +15,29 @@
 
 blt_add_library(
   NAME lcals
-  SOURCES HYDRO_1D.cpp 
+  SOURCES HYDRO_1D.cpp
           HYDRO_1D-Cuda.cpp
+          HYDRO_1D-Hip.cpp
           HYDRO_1D-OMPTarget.cpp
-          EOS.cpp 
-          EOS-Cuda.cpp 
-          EOS-OMPTarget.cpp 
-          INT_PREDICT.cpp 
-          INT_PREDICT-Cuda.cpp 
-          INT_PREDICT-OMPTarget.cpp 
-          DIFF_PREDICT.cpp 
-          DIFF_PREDICT-Cuda.cpp 
-          DIFF_PREDICT-OMPTarget.cpp 
-          FIRST_DIFF.cpp 
-          FIRST_DIFF-Cuda.cpp 
-          FIRST_DIFF-OMPTarget.cpp 
-          PLANCKIAN.cpp 
-          PLANCKIAN-Cuda.cpp 
-          PLANCKIAN-OMPTarget.cpp 
+          EOS.cpp
+          EOS-Cuda.cpp
+          EOS-Hip.cpp
+          EOS-OMPTarget.cpp
+          INT_PREDICT.cpp
+          INT_PREDICT-Cuda.cpp
+          INT_PREDICT-Hip.cpp
+          INT_PREDICT-OMPTarget.cpp
+          DIFF_PREDICT.cpp
+          DIFF_PREDICT-Cuda.cpp
+          DIFF_PREDICT-Hip.cpp
+          DIFF_PREDICT-OMPTarget.cpp
+          FIRST_DIFF.cpp
+          FIRST_DIFF-Cuda.cpp
+          FIRST_DIFF-Hip.cpp
+          FIRST_DIFF-OMPTarget.cpp
+          PLANCKIAN.cpp
+          PLANCKIAN-Cuda.cpp
+          PLANCKIAN-Hip.cpp
+          PLANCKIAN-OMPTarget.cpp
   DEPENDS_ON common ${RAJA_PERFSUITE_DEPENDS}
   )

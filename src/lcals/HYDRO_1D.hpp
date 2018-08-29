@@ -31,7 +31,7 @@
 
 #include "common/KernelBase.hpp"
 
-namespace rajaperf 
+namespace rajaperf
 {
 class RunParams;
 
@@ -47,11 +47,12 @@ public:
   ~HYDRO_1D();
 
   void setUp(VariantID vid);
-  void runKernel(VariantID vid); 
+  void runKernel(VariantID vid);
   void updateChecksum(VariantID vid);
   void tearDown(VariantID vid);
 
   void runCudaVariant(VariantID vid);
+  void runHipVariant(VariantID vid);
   void runOpenMPTargetVariant(VariantID vid);
 
 private:
@@ -63,7 +64,7 @@ private:
   Real_type m_r;
   Real_type m_t;
 
-  Index_type m_array_length; 
+  Index_type m_array_length;
 };
 
 } // end namespace lcals

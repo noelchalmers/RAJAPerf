@@ -21,7 +21,7 @@
 
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace basic
 {
@@ -42,7 +42,7 @@ MULADDSUB::MULADDSUB(const RunParams& params)
    setDefaultReps(3500);
 }
 
-MULADDSUB::~MULADDSUB() 
+MULADDSUB::~MULADDSUB()
 {
 }
 
@@ -150,6 +150,15 @@ void MULADDSUB::runKernel(VariantID vid)
     case RAJA_CUDA :
     {
       runCudaVariant(vid);
+      break;
+    }
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
       break;
     }
 #endif

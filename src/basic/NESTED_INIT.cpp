@@ -21,7 +21,7 @@
 
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace basic
 {
@@ -45,7 +45,7 @@ NESTED_INIT::NESTED_INIT(const RunParams& params)
   setDefaultReps(100);
 }
 
-NESTED_INIT::~NESTED_INIT() 
+NESTED_INIT::~NESTED_INIT()
 {
 }
 
@@ -88,7 +88,7 @@ void NESTED_INIT::runKernel(VariantID vid)
 
       NESTED_INIT_DATA_SETUP_CPU;
 
-      using EXEC_POL = 
+      using EXEC_POL =
         RAJA::KernelPolicy<
           RAJA::statement::For<2, RAJA::loop_exec,    // k
             RAJA::statement::For<1, RAJA::loop_exec,  // j
@@ -105,7 +105,7 @@ void NESTED_INIT::runKernel(VariantID vid)
         RAJA::kernel<EXEC_POL>( RAJA::make_tuple(RAJA::RangeSegment(0, ni),
                                                  RAJA::RangeSegment(0, nj),
                                                  RAJA::RangeSegment(0, nk)),
-             [=](Index_type i, Index_type j, Index_type k) {     
+             [=](Index_type i, Index_type j, Index_type k) {
              NESTED_INIT_BODY;
         });
 
@@ -157,7 +157,7 @@ void NESTED_INIT::runKernel(VariantID vid)
           >
         >;
 #else
-      using EXEC_POL = 
+      using EXEC_POL =
         RAJA::KernelPolicy<
           RAJA::statement::For<2, RAJA::omp_parallel_for_exec,    // k
             RAJA::statement::For<1, RAJA::loop_exec,  // j
@@ -175,7 +175,7 @@ void NESTED_INIT::runKernel(VariantID vid)
         RAJA::kernel<EXEC_POL>( RAJA::make_tuple(RAJA::RangeSegment(0, ni),
                                                  RAJA::RangeSegment(0, nj),
                                                  RAJA::RangeSegment(0, nk)),
-             [=](Index_type i, Index_type j, Index_type k) {     
+             [=](Index_type i, Index_type j, Index_type k) {
              NESTED_INIT_BODY;
         });
 
@@ -204,6 +204,15 @@ void NESTED_INIT::runKernel(VariantID vid)
     }
 #endif
 
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
+      break;
+    }
+#endif
+
     default : {
       std::cout << "\n  NESTED_INIT : Unknown variant id = " << vid << std::endl;
     }
@@ -221,7 +230,7 @@ void NESTED_INIT::tearDown(VariantID vid)
 {
   (void) vid;
   RAJA::free_aligned(m_array);
-  m_array = 0; 
+  m_array = 0;
 }
 
 } // end namespace basic

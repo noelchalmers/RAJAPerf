@@ -22,7 +22,7 @@
 
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace apps
 {
@@ -51,12 +51,12 @@ VOL3D::VOL3D(const RunParams& params)
   m_array_length = m_domain->nnalls;;
 }
 
-VOL3D::~VOL3D() 
+VOL3D::~VOL3D()
 {
   delete m_domain;
 }
 
-Index_type VOL3D::getItsPerRep() const { 
+Index_type VOL3D::getItsPerRep() const {
   return m_domain->lpz+1 - m_domain->fpz;
 }
 
@@ -73,7 +73,7 @@ void VOL3D::setUp(VariantID vid)
 
   allocAndInitDataConst(m_vol, m_array_length, 0.0, vid);
 
-  m_vnormq = 0.083333333333333333; /* vnormq = 1/12 */  
+  m_vnormq = 0.083333333333333333; /* vnormq = 1/12 */
 }
 
 void VOL3D::runKernel(VariantID vid)
@@ -103,7 +103,7 @@ void VOL3D::runKernel(VariantID vid)
       stopTimer();
 
       break;
-    } 
+    }
 
     case RAJA_Seq : {
 
@@ -119,15 +119,15 @@ void VOL3D::runKernel(VariantID vid)
         RAJA::forall<RAJA::loop_exec>(
           RAJA::RangeSegment(ibegin, iend), [=](Index_type i) {
           VOL3D_BODY;
-        }); 
+        });
 
       }
-      stopTimer(); 
+      stopTimer();
 
       break;
     }
 
-#if defined(RAJA_ENABLE_OPENMP)      
+#if defined(RAJA_ENABLE_OPENMP)
     case Base_OpenMP : {
 
       VOL3D_DATA_SETUP_CPU;
@@ -139,7 +139,7 @@ void VOL3D::runKernel(VariantID vid)
       startTimer();
       for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
 
-        #pragma omp parallel for 
+        #pragma omp parallel for
         for (Index_type i = ibegin ; i < iend ; ++i ) {
           VOL3D_BODY;
         }
@@ -187,6 +187,15 @@ void VOL3D::runKernel(VariantID vid)
     case RAJA_CUDA :
     {
       runCudaVariant(vid);
+      break;
+    }
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
       break;
     }
 #endif

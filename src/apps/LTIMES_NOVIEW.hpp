@@ -47,7 +47,7 @@
 
 #include "common/KernelBase.hpp"
 
-namespace rajaperf 
+namespace rajaperf
 {
 class RunParams;
 
@@ -63,11 +63,12 @@ public:
   ~LTIMES_NOVIEW();
 
   void setUp(VariantID vid);
-  void runKernel(VariantID vid); 
+  void runKernel(VariantID vid);
   void updateChecksum(VariantID vid);
   void tearDown(VariantID vid);
 
   void runCudaVariant(VariantID vid);
+  void runHipVariant(VariantID vid);
   void runOpenMPTargetVariant(VariantID vid);
 
 private:
@@ -75,15 +76,15 @@ private:
   Real_ptr m_elldat;
   Real_ptr m_psidat;
 
-  Index_type m_num_d_default; 
-  Index_type m_num_z_default; 
-  Index_type m_num_g_default; 
-  Index_type m_num_m_default; 
+  Index_type m_num_d_default;
+  Index_type m_num_z_default;
+  Index_type m_num_g_default;
+  Index_type m_num_m_default;
 
-  Index_type m_num_d; 
-  Index_type m_num_z; 
-  Index_type m_num_g; 
-  Index_type m_num_m; 
+  Index_type m_num_d;
+  Index_type m_num_z;
+  Index_type m_num_g;
+  Index_type m_num_m;
 
   Index_type m_philen;
   Index_type m_elllen;

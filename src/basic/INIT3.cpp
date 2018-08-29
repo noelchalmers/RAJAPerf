@@ -21,7 +21,7 @@
 
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace basic
 {
@@ -42,7 +42,7 @@ INIT3::INIT3(const RunParams& params)
    setDefaultReps(5000);
 }
 
-INIT3::~INIT3() 
+INIT3::~INIT3()
 {
 }
 
@@ -150,6 +150,15 @@ void INIT3::runKernel(VariantID vid)
     case RAJA_CUDA :
     {
       runCudaVariant(vid);
+      break;
+    }
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
       break;
     }
 #endif

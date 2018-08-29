@@ -21,7 +21,7 @@
 
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace lcals
 {
@@ -39,13 +39,13 @@ FIRST_DIFF::FIRST_DIFF(const RunParams& params)
    setDefaultReps(16000);
 }
 
-FIRST_DIFF::~FIRST_DIFF() 
+FIRST_DIFF::~FIRST_DIFF()
 {
 }
 
 void FIRST_DIFF::setUp(VariantID vid)
 {
-  m_array_length = getRunSize()+1; 
+  m_array_length = getRunSize()+1;
   allocAndInitDataConst(m_x, m_array_length, 0.0, vid);
   allocAndInitData(m_y, m_array_length, vid);
 }
@@ -145,6 +145,15 @@ void FIRST_DIFF::runKernel(VariantID vid)
     case RAJA_CUDA :
     {
       runCudaVariant(vid);
+      break;
+    }
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
       break;
     }
 #endif

@@ -21,7 +21,7 @@
 
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace basic
 {
@@ -56,13 +56,13 @@ TRAP_INT::TRAP_INT(const RunParams& params)
    setDefaultReps(2000);
 }
 
-TRAP_INT::~TRAP_INT() 
+TRAP_INT::~TRAP_INT()
 {
 }
 
 void TRAP_INT::setUp(VariantID vid)
 {
-  Real_type xn; 
+  Real_type xn;
   initData(xn, vid);
 
   initData(m_x0, vid);
@@ -188,6 +188,15 @@ void TRAP_INT::runKernel(VariantID vid)
     case RAJA_CUDA :
     {
       runCudaVariant(vid);
+      break;
+    }
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
       break;
     }
 #endif

@@ -21,12 +21,12 @@
 
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace stream
 {
 
- 
+
 #define ADD_DATA_SETUP_CPU \
   ResReal_ptr a = m_a; \
   ResReal_ptr b = m_b; \
@@ -40,7 +40,7 @@ ADD::ADD(const RunParams& params)
    setDefaultReps(1000);
 }
 
-ADD::~ADD() 
+ADD::~ADD()
 {
 }
 
@@ -133,7 +133,7 @@ void ADD::runKernel(VariantID vid)
 #endif
 
 #if defined(RAJA_ENABLE_TARGET_OPENMP)
-    case Base_OpenMPTarget : 
+    case Base_OpenMPTarget :
     case RAJA_OpenMPTarget :
     {
       runOpenMPTargetVariant(vid);
@@ -142,10 +142,19 @@ void ADD::runKernel(VariantID vid)
 #endif
 
 #if defined(RAJA_ENABLE_CUDA)
-    case Base_CUDA : 
+    case Base_CUDA :
     case RAJA_CUDA :
     {
       runCudaVariant(vid);
+      break;
+    }
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
       break;
     }
 #endif

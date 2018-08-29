@@ -22,7 +22,7 @@
 #include <limits>
 #include <iostream>
 
-namespace rajaperf 
+namespace rajaperf
 {
 namespace basic
 {
@@ -37,12 +37,12 @@ REDUCE3_INT::REDUCE3_INT(const RunParams& params)
 {
    setDefaultSize(1000000);
 // setDefaultReps(5000);
-// Set reps to low value until we resolve RAJA omp-target 
+// Set reps to low value until we resolve RAJA omp-target
 // reduction performance issues
    setDefaultReps(100);
 }
 
-REDUCE3_INT::~REDUCE3_INT() 
+REDUCE3_INT::~REDUCE3_INT()
 {
 }
 
@@ -187,6 +187,15 @@ void REDUCE3_INT::runKernel(VariantID vid)
     case RAJA_CUDA :
     {
       runCudaVariant(vid);
+      break;
+    }
+#endif
+
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
       break;
     }
 #endif

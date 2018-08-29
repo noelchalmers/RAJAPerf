@@ -22,7 +22,7 @@
 ///   a[i-ibegin] = val;
 /// }
 ///
-/// RAJA variants use a "View" and "Layout" to do the same thing. These 
+/// RAJA variants use a "View" and "Layout" to do the same thing. These
 /// RAJA constructs provide little benfit in 1D, but they are used here
 /// to exercise those RAJA mechanics in the simplest scenario.
 ///
@@ -40,7 +40,7 @@
 
 #include "common/KernelBase.hpp"
 
-namespace rajaperf 
+namespace rajaperf
 {
 class RunParams;
 
@@ -56,11 +56,12 @@ public:
   ~INIT_VIEW1D_OFFSET();
 
   void setUp(VariantID vid);
-  void runKernel(VariantID vid); 
+  void runKernel(VariantID vid);
   void updateChecksum(VariantID vid);
   void tearDown(VariantID vid);
 
   void runCudaVariant(VariantID vid);
+  void runHipVariant(VariantID vid);
   void runOpenMPTargetVariant(VariantID vid);
 
 private:
