@@ -78,10 +78,10 @@ void INIT_VIEW1D_OFFSET::runHipVariant(VariantID vid)
     startTimer();
     for (RepIndex_type irep = 0; irep < run_reps; ++irep) {
 
-      const size_t grid_size = RAJA_DIVIDE_CEILING_INT(iend, block_size);
+      const size_t grid_size = RAJA_DIVIDE_CEILING_INT(iend-1, block_size);
       hipLaunchKernelGGL((initview1d_offset), dim3(grid_size), dim3(block_size), 0, 0,  a, v,
                                                     ibegin,
-                                                    iend );
+                                                    iend-1 );
 
     }
     stopTimer();

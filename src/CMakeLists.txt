@@ -28,7 +28,8 @@ set(RAJA_PERFSUITE_EXECUTABLE_DEPENDS
     basic
     lcals
     polybench
-    stream)
+    stream
+    )
 list(APPEND RAJA_PERFSUITE_EXECUTABLE_DEPENDS ${RAJA_PERFSUITE_DEPENDS})
 
 blt_add_executable(
@@ -62,14 +63,14 @@ blt_add_executable(
   apps/VOL3D-Cuda.cpp
   apps/VOL3D-Hip.cpp
   apps/VOL3D-OMPTarget.cpp
-  apps/LTIMES.cpp
-  apps/LTIMES-Cuda.cpp
-  apps/LTIMES-Hip.cpp
-  apps/LTIMES-OMPTarget.cpp
-  apps/LTIMES_NOVIEW.cpp
-  apps/LTIMES_NOVIEW-Cuda.cpp
-  apps/LTIMES_NOVIEW-Hip.cpp
-  apps/LTIMES_NOVIEW-OMPTarget.cpp
+  # apps/LTIMES.cpp
+  # apps/LTIMES-Cuda.cpp
+  # apps/LTIMES-Hip.cpp
+  # apps/LTIMES-OMPTarget.cpp
+  # apps/LTIMES_NOVIEW.cpp
+  # apps/LTIMES_NOVIEW-Cuda.cpp
+  # apps/LTIMES_NOVIEW-Hip.cpp
+  # apps/LTIMES_NOVIEW-OMPTarget.cpp
   apps/WIP-COUPLE.cpp
   basic/IF_QUAD.cpp
   basic/IF_QUAD-Cuda.cpp
@@ -133,14 +134,14 @@ blt_add_executable(
   lcals/PLANCKIAN-Cuda.cpp
   lcals/PLANCKIAN-Hip.cpp
   lcals/PLANCKIAN-OMPTarget.cpp
-  polybench/POLYBENCH_2MM.cpp
-  polybench/POLYBENCH_2MM-Cuda.cpp
-  polybench/POLYBENCH_2MM-Hip.cpp
-  polybench/POLYBENCH_2MM-OMPTarget.cpp
-  polybench/POLYBENCH_3MM.cpp
-  polybench/POLYBENCH_3MM-Cuda.cpp
-  polybench/POLYBENCH_3MM-Hip.cpp
-  polybench/POLYBENCH_3MM-OMPTarget.cpp
+  # polybench/POLYBENCH_2MM.cpp
+  # polybench/POLYBENCH_2MM-Cuda.cpp
+  # polybench/POLYBENCH_2MM-Hip.cpp
+  # polybench/POLYBENCH_2MM-OMPTarget.cpp
+  # polybench/POLYBENCH_3MM.cpp
+  # polybench/POLYBENCH_3MM-Cuda.cpp
+  # polybench/POLYBENCH_3MM-Hip.cpp
+  # polybench/POLYBENCH_3MM-OMPTarget.cpp
   polybench/POLYBENCH_GEMMVER.cpp
   polybench/POLYBENCH_GEMMVER-Cuda.cpp
   polybench/POLYBENCH_GEMMVER-Hip.cpp

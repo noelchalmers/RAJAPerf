@@ -15,14 +15,15 @@
 
 blt_add_library(
   NAME polybench
-  SOURCES POLYBENCH_2MM.cpp
-          POLYBENCH_2MM-Cuda.cpp
-          POLYBENCH_2MM-Hip.cpp
-          POLYBENCH_2MM-OMPTarget.cpp
-          POLYBENCH_3MM.cpp
-          POLYBENCH_3MM-Cuda.cpp
-          POLYBENCH_3MM-Hip.cpp
-          POLYBENCH_3MM-OMPTarget.cpp
+  SOURCES
+          # POLYBENCH_2MM.cpp
+          # POLYBENCH_2MM-Cuda.cpp
+          # POLYBENCH_2MM-Hip.cpp
+          # POLYBENCH_2MM-OMPTarget.cpp
+          # POLYBENCH_3MM.cpp
+          # POLYBENCH_3MM-Cuda.cpp
+          # POLYBENCH_3MM-Hip.cpp
+          # POLYBENCH_3MM-OMPTarget.cpp
           POLYBENCH_GEMMVER.cpp
           POLYBENCH_GEMMVER-Cuda.cpp
           POLYBENCH_GEMMVER-Hip.cpp

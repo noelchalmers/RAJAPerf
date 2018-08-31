@@ -32,7 +32,7 @@
 
 
 #define INIT_VIEW1D_OFFSET_BODY  \
-  a[i-ibegin] = v;
+  a[i] = v;
 
 #define INIT_VIEW1D_OFFSET_BODY_RAJA  \
   view(i) = v;

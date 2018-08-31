@@ -140,8 +140,8 @@ static const std::string KernelNames [] =
 //
 // Polybench kernels...
 //
-  std::string("Polybench_2MM"),
-  std::string("Polybench_3MM"),
+  // std::string("Polybench_2MM"),
+  // std::string("Polybench_3MM"),
   std::string("Polybench_GEMMVER"),
 
 //
@@ -161,8 +161,8 @@ static const std::string KernelNames [] =
   std::string("Apps_VOL3D"),
   std::string("Apps_DEL_DOT_VEC_2D"),
   std::string("Apps_FIR"),
-  std::string("Apps_LTIMES"),
-  std::string("Apps_LTIMES_NOVIEW"),
+  // std::string("Apps_LTIMES"),
+  // std::string("Apps_LTIMES_NOVIEW"),
   std::string("Apps_COUPLE"),
 
   std::string("Unknown Kernel")  // Keep this at the end and DO NOT remove....
@@ -348,14 +348,14 @@ KernelBase* getKernelObject(KernelID kid,
 //
 // Polybench kernels...
 //
-    case Polybench_2MM : {
-       kernel = new polybench::POLYBENCH_2MM(run_params);
-       break;
-    }
-    case Polybench_3MM : {
-       kernel = new polybench::POLYBENCH_3MM(run_params);
-       break;
-    }
+    // case Polybench_2MM : {
+    //    kernel = new polybench::POLYBENCH_2MM(run_params);
+    //    break;
+    // }
+    // case Polybench_3MM : {
+    //    kernel = new polybench::POLYBENCH_3MM(run_params);
+    //    break;
+    // }
     case Polybench_GEMMVER : {
        kernel = new polybench::POLYBENCH_GEMMVER(run_params);
        break;
@@ -408,14 +408,14 @@ KernelBase* getKernelObject(KernelID kid,
        kernel = new apps::FIR(run_params);
        break;
     }
-    case Apps_LTIMES : {
-       kernel = new apps::LTIMES(run_params);
-       break;
-    }
-    case Apps_LTIMES_NOVIEW : {
-       kernel = new apps::LTIMES_NOVIEW(run_params);
-       break;
-    }
+    // case Apps_LTIMES : {
+    //    kernel = new apps::LTIMES(run_params);
+    //    break;
+    // }
+    // case Apps_LTIMES_NOVIEW : {
+    //    kernel = new apps::LTIMES_NOVIEW(run_params);
+    //    break;
+    // }
     case Apps_COUPLE : {
        kernel = new apps::COUPLE(run_params);
        break;
