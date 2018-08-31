@@ -26,9 +26,9 @@ int main( int argc, char** argv )
   // STEP 2: Assemble kernels and variants to run
   executor.setupSuite();
 
-  // STEP 3: Report suite run summary 
+  // STEP 3: Report suite run summary
   //         (enable users to catch errors before entire suite is run)
-  executor.reportRunSummary(std::cout); 
+  executor.reportRunSummary(std::cout);
 
   // STEP 4: Execute suite
   executor.runSuite();
@@ -36,7 +36,7 @@ int main( int argc, char** argv )
   // STEP 5: Generate suite execution reports
   executor.outputRunData();
 
-  std::cout << "\n\nDONE!!!...." << std::endl; 
+  std::cout << "\n\nDONE!!!...." << std::endl;
 
   return 0;
 }
