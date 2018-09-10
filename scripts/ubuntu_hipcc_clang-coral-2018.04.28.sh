@@ -22,8 +22,9 @@ mkdir build_ubuntu_hipcc_clang-coral-2018.04.28 && cd build_ubuntu_hipcc_clang-c
 cmake \
   -DCMAKE_BUILD_TYPE=Release \
   -C ../host-configs/ubuntu/hipcc_clang_coral_2018_08_28.cmake \
-  -DENABLE_OPENMP=Off \
+  -DENABLE_OPENMP=On \
   -DENABLE_HIP=On \
+  -DENABLE_EXAMPLES=Off \
   -DPERFSUITE_ENABLE_WARNINGS=Off \
   -DENABLE_ALL_WARNINGS=Off \
   -DCMAKE_INSTALL_PREFIX=../install_ubuntu_hipcc_clang-coral-2018.04.28 \

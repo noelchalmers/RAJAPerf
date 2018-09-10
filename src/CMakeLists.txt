@@ -92,10 +92,10 @@ blt_add_executable(
   basic/REDUCE3_INT-Cuda.cpp
   basic/REDUCE3_INT-Hip.cpp
   basic/REDUCE3_INT-OMPTarget.cpp
-  basic/TRAP_INT.cpp
-  basic/TRAP_INT-Cuda.cpp
-  basic/TRAP_INT-Hip.cpp
-  basic/TRAP_INT-OMPTarget.cpp
+  # basic/TRAP_INT.cpp
+  # basic/TRAP_INT-Cuda.cpp
+  # basic/TRAP_INT-Hip.cpp
+  # basic/TRAP_INT-OMPTarget.cpp
   basic/INIT_VIEW1D.cpp
   basic/INIT_VIEW1D-Cuda.cpp
   basic/INIT_VIEW1D-Hip.cpp
@@ -154,10 +154,10 @@ blt_add_executable(
   stream/COPY-Cuda.cpp
   stream/COPY-Hip.cpp
   stream/COPY-OMPTarget.cpp
-  stream/DOT.cpp
-  stream/DOT-Cuda.cpp
-  stream/DOT-Hip.cpp
-  stream/DOT-OMPTarget.cpp
+  # stream/DOT.cpp
+  # stream/DOT-Cuda.cpp
+  # stream/DOT-Hip.cpp
+  # stream/DOT-OMPTarget.cpp
   stream/MUL.cpp
   stream/MUL-Cuda.cpp
   stream/MUL-Hip.cpp

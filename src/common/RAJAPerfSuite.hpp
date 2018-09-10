@@ -98,7 +98,7 @@ enum KernelID {
 //
   Basic_MULADDSUB = 0,
   Basic_IF_QUAD,
-  Basic_TRAP_INT,
+  // Basic_TRAP_INT,
   Basic_INIT3,
   Basic_REDUCE3_INT,
   Basic_NESTED_INIT,
@@ -129,7 +129,7 @@ enum KernelID {
   Stream_MUL,
   Stream_ADD,
   Stream_TRIAD,
-  Stream_DOT,
+  // Stream_DOT,
 
 //
 // Apps kernels...

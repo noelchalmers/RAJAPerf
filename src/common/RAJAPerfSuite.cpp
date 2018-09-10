@@ -120,7 +120,7 @@ static const std::string KernelNames [] =
 //
   std::string("Basic_MULADDSUB"),
   std::string("Basic_IF_QUAD"),
-  std::string("Basic_TRAP_INT"),
+  // std::string("Basic_TRAP_INT"),
   std::string("Basic_INIT3"),
   std::string("Basic_REDUCE3_INT"),
   std::string("Basic_NESTED_INIT"),
@@ -151,7 +151,7 @@ static const std::string KernelNames [] =
   std::string("Stream_MUL"),
   std::string("Stream_ADD"),
   std::string("Stream_TRIAD"),
-  std::string("Stream_DOT"),
+  // std::string("Stream_DOT"),
 
 //
 // Apps kernels...
@@ -292,10 +292,10 @@ KernelBase* getKernelObject(KernelID kid,
        kernel = new basic::IF_QUAD(run_params);
        break;
     }
-    case Basic_TRAP_INT : {
-       kernel = new basic::TRAP_INT(run_params);
-       break;
-    }
+    // case Basic_TRAP_INT : {
+    //    kernel = new basic::TRAP_INT(run_params);
+    //    break;
+    // }
     case Basic_INIT3 : {
        kernel = new basic::INIT3(run_params);
        break;
@@ -380,10 +380,10 @@ KernelBase* getKernelObject(KernelID kid,
        kernel = new stream::TRIAD(run_params);
        break;
     }
-    case Stream_DOT : {
-       kernel = new stream::DOT(run_params);
-       break;
-    }
+    // case Stream_DOT : {
+    //    kernel = new stream::DOT(run_params);
+    //    break;
+    // }
 
 //
 // Apps kernels...
