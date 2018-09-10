@@ -29,8 +29,8 @@ namespace rajaperf
 namespace apps
 {
 
-#define USE_HIP_CONSTANT_MEMORY
-//#undef USE_HIP_CONSTANT_MEMORY
+// #define USE_HIP_CONSTANT_MEMORY
+// #undef USE_HIP_CONSTANT_MEMORY
 
   //
   // Define thread block size for HIP execution
@@ -50,7 +50,7 @@ __constant__ Real_type coeff[FIR_COEFFLEN];
 \
   allocAndInitHipDeviceData(in, m_in, getRunSize()); \
   allocAndInitHipDeviceData(out, m_out, getRunSize()); \
-  hipMemcpyToSymbol(coeff, coeff_array, FIR_COEFFLEN * sizeof(Real_type));
+  hipMemcpyToSymbol("coeff", coeff_array, FIR_COEFFLEN * sizeof(Real_type));
 
 
 #define FIR_DATA_TEARDOWN_HIP \
