@@ -3,7 +3,7 @@
 	url = ssh://git@cz-bitbucket.llnl.gov:7999/raja/polybench-raja.git
 [submodule "tpl/RAJA"]
 	path = tpl/RAJA
-	url = http://gitlab1.amd.com/nchalmer/RAJA.git
+	url = http://github.com/noelchalmers/RAJA.git
 [submodule "blt"]
 	path = blt
-	url = http://gitlab1.amd.com/nchalmer/blt.git
+	url = http://github.com/noelchalmers/blt.git
