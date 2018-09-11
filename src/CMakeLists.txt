@@ -63,14 +63,14 @@ blt_add_executable(
   apps/VOL3D-Cuda.cpp
   apps/VOL3D-Hip.cpp
   apps/VOL3D-OMPTarget.cpp
-  # apps/LTIMES.cpp
-  # apps/LTIMES-Cuda.cpp
-  # apps/LTIMES-Hip.cpp
-  # apps/LTIMES-OMPTarget.cpp
-  # apps/LTIMES_NOVIEW.cpp
-  # apps/LTIMES_NOVIEW-Cuda.cpp
-  # apps/LTIMES_NOVIEW-Hip.cpp
-  # apps/LTIMES_NOVIEW-OMPTarget.cpp
+  apps/LTIMES.cpp
+  apps/LTIMES-Cuda.cpp
+  apps/LTIMES-Hip.cpp
+  apps/LTIMES-OMPTarget.cpp
+  apps/LTIMES_NOVIEW.cpp
+  apps/LTIMES_NOVIEW-Cuda.cpp
+  apps/LTIMES_NOVIEW-Hip.cpp
+  apps/LTIMES_NOVIEW-OMPTarget.cpp
   apps/WIP-COUPLE.cpp
   basic/IF_QUAD.cpp
   basic/IF_QUAD-Cuda.cpp

@@ -36,14 +36,14 @@ blt_add_library(
           FIR-Cuda.cpp
           FIR-Hip.cpp
           FIR-OMPTarget.cpp
-          # LTIMES.cpp
-          # LTIMES-Cuda.cpp
-          # LTIMES-Hip.cpp
-          # LTIMES-OMPTarget.cpp
-          # LTIMES_NOVIEW.cpp
-          # LTIMES_NOVIEW-Cuda.cpp
-          # LTIMES_NOVIEW-Hip.cpp
-          # LTIMES_NOVIEW-OMPTarget.cpp
+          LTIMES.cpp
+          LTIMES-Cuda.cpp
+          LTIMES-Hip.cpp
+          LTIMES-OMPTarget.cpp
+          LTIMES_NOVIEW.cpp
+          LTIMES_NOVIEW-Cuda.cpp
+          LTIMES_NOVIEW-Hip.cpp
+          LTIMES_NOVIEW-OMPTarget.cpp
           WIP-COUPLE.cpp
   DEPENDS_ON common ${RAJA_PERFSUITE_DEPENDS}
   )

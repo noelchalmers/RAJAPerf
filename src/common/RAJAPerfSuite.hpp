@@ -139,8 +139,8 @@ enum KernelID {
   Apps_VOL3D,
   Apps_DEL_DOT_VEC_2D,
   Apps_FIR,
-  // Apps_LTIMES,
-  // Apps_LTIMES_NOVIEW,
+  Apps_LTIMES,
+  Apps_LTIMES_NOVIEW,
   Apps_COUPLE,
 
   NumKernels // Keep this one last and NEVER comment out (!!)
