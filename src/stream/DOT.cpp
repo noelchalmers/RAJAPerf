@@ -113,7 +113,8 @@ void DOT::runKernel(VariantID vid)
 
         Real_type dot = m_dot_init;
 
-        #pragma omp parallel for reduction(+:dot)
+        // #pragma omp parallel for reduction(+:dot)
+        #pragma omp parallel for
         for (Index_type i = ibegin; i < iend; ++i ) {
           DOT_BODY;
         }

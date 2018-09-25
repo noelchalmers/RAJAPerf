@@ -23,10 +23,10 @@ blt_add_library(
           COPY-Cuda.cpp
           COPY-Hip.cpp
           COPY-OMPTarget.cpp
-          # DOT.cpp
-          # DOT-Cuda.cpp
-          # DOT-Hip.cpp
-          # DOT-OMPTarget.cpp
+          DOT.cpp
+          DOT-Cuda.cpp
+          DOT-Hip.cpp
+          DOT-OMPTarget.cpp
           MUL.cpp
           MUL-Cuda.cpp
           MUL-Hip.cpp

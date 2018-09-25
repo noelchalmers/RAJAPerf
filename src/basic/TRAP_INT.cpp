@@ -138,7 +138,9 @@ void TRAP_INT::runKernel(VariantID vid)
 
         Real_type sumx = m_sumx_init;
 
-        #pragma omp parallel for reduction(+:sumx)
+        /* strange LLVM compiler issue using reduction() here */
+        // #pragma omp parallel for reduction(+:sumx)
+        #pragma omp parallel for
         for (Index_type i = ibegin; i < iend; ++i ) {
           TRAP_INT_BODY;
         }
