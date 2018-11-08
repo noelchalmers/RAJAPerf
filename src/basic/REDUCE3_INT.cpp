@@ -193,6 +193,15 @@ void REDUCE3_INT::runKernel(VariantID vid)
     }
 #endif
 
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
+      break;
+    }
+#endif
+    
     default : {
       std::cout << "\n  REDUCE3_INT : Unknown variant id = " << vid << std::endl;
     }

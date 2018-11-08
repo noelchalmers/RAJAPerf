@@ -193,6 +193,15 @@ void COUPLE::runKernel(VariantID vid)
     }
 #endif
 
+#if defined(RAJA_ENABLE_HIP) && 0
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
+      break;
+    }
+#endif
+
     default : {
       std::cout << "\n  COUPLE : Unknown variant id = " << vid << std::endl;
     }

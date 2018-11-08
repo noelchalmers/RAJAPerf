@@ -60,6 +60,7 @@ public:
   void updateChecksum(VariantID vid);
   void tearDown(VariantID vid);
   void runCudaVariant(VariantID vid);
+  void runHipVariant(VariantID vid);
   void runOpenMPTargetVariant(VariantID vid);
 
 private:

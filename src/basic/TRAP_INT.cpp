@@ -140,7 +140,7 @@ void TRAP_INT::runKernel(VariantID vid)
 
         Real_type sumx = m_sumx_init;
 
-        #pragma omp parallel for reduction(+:sumx)
+        #pragma omp parallel for //reduction(+:sumx)
         for (Index_type i = ibegin; i < iend; ++i ) {
           TRAP_INT_BODY;
         }
@@ -194,6 +194,15 @@ void TRAP_INT::runKernel(VariantID vid)
     }
 #endif
 
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP :
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
+      break;
+    }
+#endif
+    
     default : {
       std::cout << "\n  TRAP_INT : Unknown variant id = " << vid << std::endl;
     }

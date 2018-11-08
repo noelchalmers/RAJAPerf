@@ -52,6 +52,7 @@ public:
   void tearDown(VariantID vid);
 
   void runCudaVariant(VariantID vid);
+  void runHipVariant(VariantID vid);
   void runOpenMPTargetVariant(VariantID vid);
 
 private:

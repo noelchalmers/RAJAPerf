@@ -17,24 +17,31 @@ blt_add_library(
   NAME polybench
   SOURCES POLYBENCH_2MM.cpp 
           POLYBENCH_2MM-Cuda.cpp
+          POLYBENCH_2MM-Hip.cpp
           POLYBENCH_2MM-OMPTarget.cpp
           POLYBENCH_3MM.cpp
           POLYBENCH_3MM-Cuda.cpp
+          POLYBENCH_3MM-Hip.cpp
           POLYBENCH_3MM-OMPTarget.cpp
           POLYBENCH_ADI.cpp
           POLYBENCH_ADI-Cuda.cpp
+          POLYBENCH_ADI-Hip.cpp
           POLYBENCH_ADI-OMPTarget.cpp
           POLYBENCH_ATAX.cpp
           POLYBENCH_ATAX-Cuda.cpp
+          POLYBENCH_ATAX-Hip.cpp
           POLYBENCH_ATAX-OMPTarget.cpp
           POLYBENCH_FDTD_2D.cpp
           POLYBENCH_FDTD_2D-Cuda.cpp
+          POLYBENCH_FDTD_2D-Hip.cpp
           POLYBENCH_FDTD_2D-OMPTarget.cpp
           POLYBENCH_GEMVER.cpp
           POLYBENCH_GEMVER-Cuda.cpp
+          POLYBENCH_GEMVER-Hip.cpp
           POLYBENCH_GEMVER-OMPTarget.cpp
           POLYBENCH_JACOBI_1D.cpp
           POLYBENCH_JACOBI_1D-Cuda.cpp
+          POLYBENCH_JACOBI_1D-Hip.cpp
           POLYBENCH_JACOBI_1D-OMPTarget.cpp
   DEPENDS_ON common ${RAJA_PERFSUITE_DEPENDS}
   )

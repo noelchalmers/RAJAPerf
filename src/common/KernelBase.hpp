@@ -75,6 +75,11 @@ public:
       cudaDeviceSynchronize();
     }
 #endif
+#if defined(RAJA_ENABLE_HIP)
+    if ( running_variant == Base_HIP || running_variant == RAJA_HIP ) {
+      hipDeviceSynchronize();
+    }
+#endif
     timer.start(); 
   }
 
@@ -83,6 +88,11 @@ public:
 #if defined(RAJA_ENABLE_CUDA)
     if ( running_variant == Base_CUDA || running_variant == RAJA_CUDA ) {
       cudaDeviceSynchronize();
+    }
+#endif
+#if defined(RAJA_ENABLE_HIP)
+    if ( running_variant == Base_HIP || running_variant == RAJA_HIP ) {
+      hipDeviceSynchronize();
     }
 #endif
     timer.stop(); recordExecTime(); 

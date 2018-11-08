@@ -115,7 +115,7 @@ void DOT::runKernel(VariantID vid)
 
         Real_type dot = m_dot_init;
 
-        #pragma omp parallel for reduction(+:dot)
+        #pragma omp parallel for //reduction(+:dot)
         for (Index_type i = ibegin; i < iend; ++i ) {
           DOT_BODY;
         }
@@ -169,6 +169,15 @@ void DOT::runKernel(VariantID vid)
     }
 #endif
 
+#if defined(RAJA_ENABLE_HIP)
+    case Base_HIP : 
+    case RAJA_HIP :
+    {
+      runHipVariant(vid);
+      break;
+    }
+#endif
+    
     default : {
       std::cout << "\n  DOT : Unknown variant id = " << vid << std::endl;
     }
